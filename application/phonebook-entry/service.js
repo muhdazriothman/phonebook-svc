@@ -7,7 +7,7 @@ const {
 class PhoneBookEntryService {
     /**
      * @param {Object} dependencies
-     * @param {import('../../infra/repositories/phonebook-entry/repository')} dependencies.phoneBookEntryRepository
+     * @param {import('../../infra/repositories/phonebook-entry')} dependencies.phoneBookEntryRepository
      */
     constructor(dependencies) {
         const {

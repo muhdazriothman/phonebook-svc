@@ -1,15 +1,15 @@
 'use strict';
 
-const PhoneBookEntry = require('../../../domain/entities/phonebook-entry');
+const PhoneBookEntry = require('../../domain/entities/phonebook-entry');
 
 const {
     DatabaseError
-} = require('../../../utils/error');
+} = require('../../utils/error');
 
 class PhoneBookEntryRepository {
     /**
      * @param {Object} dependencies
-     * @param {import('../../postgres/client')} dependencies.postgresClient
+     * @param {import('../postgres/client')} dependencies.postgresClient
      */
     constructor(dependencies) {
         this.postgresClient = dependencies.postgresClient;
