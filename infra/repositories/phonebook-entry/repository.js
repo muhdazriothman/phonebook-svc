@@ -6,25 +6,19 @@ const {
     DatabaseError
 } = require('../../../utils/error');
 
-/**
- * @typedef {Object} PhonebookEntryDO
- * @property {number} id
- * @property {string} name
- * @property {string} date_of_birth
- * @property {string} mobile_number
- * @property {number} user_id
- */
-
 class PhoneBookEntryRepository {
+    /**
+     * @param {Object} dependencies
+     * @param {import('../../postgres/client')} dependencies.postgresClient
+     */
     constructor(dependencies) {
         this.postgresClient = dependencies.postgresClient;
     }
 
-    /**
-     * Convert DO to domain object
-     * @param {PhonebookEntryDO} record
-     * @returns {PhoneBookEntry}
-     */
+    static create(dependencies) {
+        return new PhoneBookEntryRepository(dependencies);
+    }
+
     static toDomain(record) {
         return new PhoneBookEntry({
             id: record.id,
@@ -35,11 +29,6 @@ class PhoneBookEntryRepository {
         });
     }
 
-    /**
-     * Create a new phone book entry
-     * @param {PhoneBookEntry} entity
-     * @returns {Promise<PhonebookEntryDO>}
-     */
     async create(entity) {
         const { 
             userId = 1,
@@ -59,14 +48,6 @@ class PhoneBookEntryRepository {
         }
     }
 
-    /**
-     * Get by name and mobile number
-     * @param {Object} params
-     * @param {number} params.userId
-     * @param {string} params.name
-     * @param {string} params.mobileNumber
-     * @returns {Promise<PhonebookEntryDO>}
-     */
     async getByNameAndMobileNumber(params) {
         const {
             userId = 1,
@@ -84,11 +65,6 @@ class PhoneBookEntryRepository {
         }
     }
 
-    /**
-     * Get by user id
-     * @param {number} userId
-     * @returns {Promise<Array<PhonebookEntryDO>>}
-     */
     async listByUserId(userId) {
         const userIdMock = 1
         const query = 'SELECT * FROM phone_book_entries WHERE user_id = $1';
@@ -110,14 +86,7 @@ class PhoneBookEntryRepository {
         }
     }
 
-    /**
-     * Delete by id
-     * @param {Object} params
-     * @param {number} params.userId
-     * @param {number} params.id
-     * @returns {Promise<void>}
-     */
-    async delete(params) {
+    async deleteById(params) {
         const {
             userId,
             id
