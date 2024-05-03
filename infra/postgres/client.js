@@ -6,7 +6,7 @@ const SecretManagerClient = require('../secret-manager/client');
 class PostgresClient {
   constructor() {
     this.secretManagerClient = new SecretManagerClient();
-    this.client = null; // Client is initially null until connected
+    this.client = null;
   }
 
   static create() {
@@ -19,7 +19,7 @@ class PostgresClient {
     }
 
     if (!this.client) {
-      const secret = await this.secretManagerClient.getSecret(SecretManagerClient.getSecretName('db'));
+      const secret = await this.secretManagerClient.getSecret(SecretManagerClient.SecretKey.db);
 
       this.client = new pg.Client({
         user: secret.user,

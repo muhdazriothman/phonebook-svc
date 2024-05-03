@@ -2,7 +2,12 @@ const AWS = require('aws-sdk');
 
 AWS.config.update({ region: 'ap-southeast-1' });
 
-class SecretsManagerClient {
+const SecretKey = {
+    db: 'bursa-phonebook-db-secret'
+};
+class SecretManagerClient {
+    static SecretKey = SecretKey;
+
     constructor() {
         this.secretsManager = new AWS.SecretsManager();
         this.cachedSecret = {};
@@ -17,8 +22,12 @@ class SecretsManagerClient {
             }
 
             const data = await this.secretsManager.getSecretValue({ SecretId: secretName }).promise();
+
+            const parsedSecret = JSON.parse(data.SecretString);
+
+            this.cachedSecret[secretName] = parsedSecret;
         
-            return JSON.parse(data.SecretString);
+            return parsedSecret;
         } catch (err) {
             console.error("Error retrieving secret:", err);
             throw err;
@@ -32,14 +41,6 @@ class SecretsManagerClient {
 
         return null;
     }
-
-    static getSecretName(key) {
-        const secretConfig = {
-            db: 'bursa-phonebook-db-secret'
-        };
-
-        return secretConfig[key] || null;
-    }
 }
 
-module.exports = SecretsManagerClient;
+module.exports = SecretManagerClient;
