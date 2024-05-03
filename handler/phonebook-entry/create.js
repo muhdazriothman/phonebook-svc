@@ -2,7 +2,7 @@
 
 const PhoneBookEntryDto = require('../../application/phonebook-entry/dto');
 const PhoneBookEntryService = require('../../application/phonebook-entry/service');
-const PhoneBookEntryRepository = require('../../infra/repositories/phonebook-entry');
+const PhoneBookEntryRepository = require('../../infra/repositories/phonebook-entry/repository');
 
 const jsonUtils = require('../../utils/json');
 
