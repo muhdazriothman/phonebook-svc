@@ -31,11 +31,11 @@ class PhoneBookEntryService {
         return await this.phoneBookEntryRepository.create(dto);
     }
 
-    async listPhoneBookEntry(userId) {
+    async list(userId) {
         return await this.phoneBookEntryRepository.listByUserId(userId);
     }
 
-    async deletePhoneBookEntry(params) {
+    async delete(params) {
         return await this.phoneBookEntryRepository.deleteById(params);
     }
 }

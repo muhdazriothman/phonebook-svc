@@ -16,7 +16,7 @@ exports.handler = async (event) => {
       phoneBookEntryRepository: PhoneBookEntryRepository.create()
     });
 
-    const result = await phoneBookEntryService.listPhoneBookEntry(userId);
+    const result = await phoneBookEntryService.list(userId);
     console.log('result: ', result);
 
     return {

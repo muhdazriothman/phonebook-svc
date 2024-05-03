@@ -16,7 +16,7 @@ exports.handler = async (event) => {
       phoneBookEntryRepository: PhoneBookEntryRepository.create()
     });
 
-    const result = await phoneBookEntryService.deletePhoneBookEntry({
+    const result = await phoneBookEntryService.delete({
       userId: userId,
       phoneBookEntryId: event.pathParameters.id
     });
