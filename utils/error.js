@@ -26,7 +26,7 @@ class DatabaseError extends Error {
 }
 
 function resolveError(err) {
-    let statusCode = 500; // Default status code for internal server error
+    let statusCode = 500;
     let errorMessage = 'An unexpected error occurred.';
 
     if (err instanceof ValidationError) {
@@ -42,7 +42,6 @@ function resolveError(err) {
     
     console.log('error', err);
 
-    // Additional checks and mappings for other custom error types can be added here
     return {
         statusCode: statusCode,
         body: JSON.stringify({
