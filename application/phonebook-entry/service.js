@@ -5,6 +5,10 @@ const {
 } = require('../../utils/error');
 
 class PhoneBookEntryService {
+    /**
+     * @param {Object} dependencies
+     * @param {import('../../infra/repositories/phonebook-entry/repository')} dependencies.phoneBookEntryRepository
+     */
     constructor(dependencies) {
         const {
             phoneBookEntryRepository 
@@ -17,22 +21,22 @@ class PhoneBookEntryService {
         return new PhoneBookEntryService(dependencies);
     }
 
-    async createPhoneBookEntry(dto) {
-        const sameEntry = await this.phoneBookEntryRepository.getPhoneBookEntryByNameAndMobileNumber(dto);
+    async create(dto) {
+        const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
         if (sameEntry.length > 0) {
             throw new BusinessLogicError('Found duplicated entry');
         }
 
-        return await this.phoneBookEntryRepository.createPhoneBookEntry(dto);
+        return await this.phoneBookEntryRepository.create(dto);
     }
 
     async listPhoneBookEntry(userId) {
-        return await this.phoneBookEntryRepository.getPhoneBookEntryByUserId(userId);
+        return await this.phoneBookEntryRepository.listByUserId(userId);
     }
 
     async deletePhoneBookEntry(params) {
-        return await this.phoneBookEntryRepository.deletePhoneBookEntryById(params);
+        return await this.phoneBookEntryRepository.deleteById(params);
     }
 }
 
