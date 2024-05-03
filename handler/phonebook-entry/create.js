@@ -25,7 +25,7 @@ exports.handler = async (event) => {
       phoneBookEntryRepository: PhoneBookEntryRepository.create()
     });
 
-    const result = await phoneBookEntryService.createPhoneBookEntry(phoneBookEntryDto);
+    const result = await phoneBookEntryService.create(phoneBookEntryDto);
     console.log('result: ', result);
 
     return {
