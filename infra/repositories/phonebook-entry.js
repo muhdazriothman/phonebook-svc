@@ -2,6 +2,8 @@
 
 const PhoneBookEntry = require('../../domain/entities/phonebook-entry');
 
+const PostgresClient = require('../postgres/client');
+
 const {
     DatabaseError
 } = require('../../utils/error');
@@ -15,8 +17,10 @@ class PhoneBookEntryRepository {
         this.postgresClient = dependencies.postgresClient;
     }
 
-    static create(dependencies) {
-        return new PhoneBookEntryRepository(dependencies);
+    static create() {
+        return new PhoneBookEntryRepository({
+            postgresClient: PostgresClient.create()
+        });
     }
 
     static toDomain(record) {
@@ -59,6 +63,11 @@ class PhoneBookEntryRepository {
 
         try {
             const result = await this.postgresClient.execute(query, values);
+
+            if (result.length === 0) {
+                return null;
+            }
+            
             return PhoneBookEntryRepository.toDomain(result[0]); 
         } catch (error) {
             throw new DatabaseError('Database error occured');

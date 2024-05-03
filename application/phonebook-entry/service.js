@@ -24,7 +24,7 @@ class PhoneBookEntryService {
     async create(dto) {
         const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
-        if (sameEntry.length > 0) {
+        if (sameEntry) {
             throw new BusinessLogicError('Found duplicated entry');
         }
 
