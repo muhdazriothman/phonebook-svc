@@ -39,14 +39,14 @@ function resolveError(err) {
         statusCode = 500;
         errorMessage = err.message;
     }
-    
+
     console.log('error', err);
 
     return {
         statusCode: statusCode,
         body: JSON.stringify({
             message: errorMessage
-        })        
+        })
     };
 }
 

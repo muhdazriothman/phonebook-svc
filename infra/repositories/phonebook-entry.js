@@ -34,7 +34,7 @@ class PhoneBookEntryRepository {
     }
 
     async create(entity) {
-        const { 
+        const {
             userId = 1,
             name,
             dateOfBirth,
@@ -48,6 +48,7 @@ class PhoneBookEntryRepository {
             const result = await this.postgresClient.execute(query, values);
             return PhoneBookEntryRepository.toDomain(result[0]);
         } catch (error) {
+            console.log('create: ', error);
             throw new DatabaseError('Database error occured');
         }
     }
@@ -67,9 +68,10 @@ class PhoneBookEntryRepository {
             if (result.length === 0) {
                 return null;
             }
-            
-            return PhoneBookEntryRepository.toDomain(result[0]); 
+
+            return PhoneBookEntryRepository.toDomain(result[0]);
         } catch (error) {
+            console.log('getByNameAndMobileNumber: ', error);
             throw new DatabaseError('Database error occured');
         }
     }
@@ -88,9 +90,10 @@ class PhoneBookEntryRepository {
             for (const record of result) {
                 phoneBookEntries.push(PhoneBookEntryRepository.toDomain(record));
             }
-           
+
             return phoneBookEntries;
         } catch (error) {
+            console.log('listByUserId: ', error);
             throw new DatabaseError('Database error occured');
         }
     }
@@ -107,6 +110,7 @@ class PhoneBookEntryRepository {
         try {
             await this.postgresClient.execute(query, values);
         } catch (error) {
+            console.log('deleteById: ', error);
             throw new DatabaseError('Database error occured');
         }
     }

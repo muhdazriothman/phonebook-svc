@@ -16,7 +16,7 @@ class SecretManagerClient {
     async getSecret(secretName) {
         try {
             const secret = this.getCachedSecret(secretName);
-            
+
             if (secret) {
                 return secret;
             }
@@ -26,7 +26,7 @@ class SecretManagerClient {
             const parsedSecret = JSON.parse(data.SecretString);
 
             this.cachedSecret[secretName] = parsedSecret;
-        
+
             return parsedSecret;
         } catch (err) {
             console.error("Error retrieving secret:", err);
