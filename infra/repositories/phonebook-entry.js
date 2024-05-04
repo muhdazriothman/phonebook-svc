@@ -41,7 +41,7 @@ class PhoneBookEntryRepository {
             mobileNumber
         } = entity;
 
-        const query = 'INSERT INTO phone_book_entries (user_id, name, date_of_birth, mobile_number) VALUES ($1, $2, $3, $4) RETURNING *';
+        const query = 'INSERT INTO phonebook_entries (user_id, name, date_of_birth, mobile_number) VALUES ($1, $2, $3, $4) RETURNING *';
         const values = [userId, name, dateOfBirth, mobileNumber];
 
         try {
@@ -59,7 +59,7 @@ class PhoneBookEntryRepository {
             name,
             mobileNumber
         } = params;
-        const query = 'SELECT * FROM phone_book_entries WHERE user_id = $1 AND name = $2 AND mobile_number = $3';
+        const query = 'SELECT * FROM phonebook_entries WHERE user_id = $1 AND name = $2 AND mobile_number = $3';
         const values = [userId, name, mobileNumber];
 
         try {
@@ -77,8 +77,8 @@ class PhoneBookEntryRepository {
     }
 
     async listByUserId(userId) {
-        const userIdMock = 1
-        const query = 'SELECT * FROM phone_book_entries WHERE user_id = $1';
+        const userIdMock = 1;
+        const query = 'SELECT * FROM phonebook_entries WHERE user_id = $1';
         const values = [userIdMock];
 
         try {
@@ -126,7 +126,7 @@ class PhoneBookEntryRepository {
             id
         } = params;
 
-        const query = 'DELETE FROM phone_book_entries WHERE user_id = $1 AND id = $2';
+        const query = 'DELETE FROM phonebook_entries WHERE user_id = $1 AND id = $2';
         const values = [userId, id];
 
         try {
