@@ -9,8 +9,7 @@ const {
 
 exports.handler = async (event) => {
     try {
-        // TODO - get user id from event
-        const userId = 1;
+        const userId = event.requestContext.authorizer.id;
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create()
