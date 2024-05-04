@@ -24,7 +24,7 @@ class PhoneBookEntryRepository {
     }
 
     static toDomain(record) {
-        return new PhoneBookEntry({
+        return PhoneBookEntry.create({
             id: record.id,
             name: record.name,
             dateOfBirth: record.date_of_birth,
