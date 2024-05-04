@@ -16,7 +16,6 @@ exports.handler = async (event) => {
         });
 
         const result = await phoneBookEntryService.list(userId);
-        console.log('result: ', result);
 
         return {
             statusCode: 200,

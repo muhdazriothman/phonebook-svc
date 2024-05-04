@@ -23,7 +23,6 @@ exports.handler = async (event) => {
         });
 
         const result = await userService.login(userDto);
-        console.log('result: ', result);
 
         return {
             statusCode: 200,
