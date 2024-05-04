@@ -46,6 +46,12 @@ class PhoneBookEntryService {
     }
 
     async delete(params) {
+        const phoneBookEntry = await this.phoneBookEntryRepository.getById(params);
+
+        if (!phoneBookEntry) {
+            throw new BusinessLogicError('Phonebook entry not found');
+        }
+
         return await this.phoneBookEntryRepository.deleteById(params);
     }
 }
