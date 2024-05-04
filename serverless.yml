@@ -28,6 +28,7 @@ provider:
 #  stage: dev
   region: ap-southeast-1
   timeout: 30
+  memorySize: 128
 
 # you can add statements to the Lambda function's IAM Role here
 #  iam:
@@ -60,6 +61,17 @@ provider:
 #    - include-me-dir/**
 
 functions:
+  update-phonebook-entry:
+    handler: handler/phonebook-entry/update.handler
+    name: 'update-phonebook-entry'
+    events:
+     - http:
+        path: /update/{id}
+        method: put
+        request: 
+          parameters: 
+             paths: 
+               id: true
   delete-phonebook-entry:
     handler: handler/phonebook-entry/delete.handler
     name: 'delete-phonebook-entry'

@@ -11,7 +11,7 @@ class PhoneBookEntryService {
      */
     constructor(dependencies) {
         const {
-            phoneBookEntryRepository 
+            phoneBookEntryRepository
         } = dependencies;
 
         this.phoneBookEntryRepository = phoneBookEntryRepository;
@@ -33,6 +33,16 @@ class PhoneBookEntryService {
 
     async list(userId) {
         return await this.phoneBookEntryRepository.listByUserId(userId);
+    }
+
+    async update(dto) {
+        const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
+
+        if (sameEntry && sameEntry.id !== dto.id) {
+            throw new BusinessLogicError('Found duplicated entry');
+        }
+
+        return await this.phoneBookEntryRepository.updateById(dto);
     }
 
     async delete(params) {

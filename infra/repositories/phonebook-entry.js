@@ -98,6 +98,28 @@ class PhoneBookEntryRepository {
         }
     }
 
+    updateById(params) {
+        const {
+            // userId,
+            id,
+            name,
+            dateOfBirth,
+            mobileNumber
+        } = params;
+
+        const userIdMock = 1;
+
+        const query = 'UPDATE phonebook_entries SET name = $1, date_of_birth = $2, mobile_number = $3 WHERE user_id = $4 AND id = $5 RETURNING *';
+        const values = [name, dateOfBirth, mobileNumber, userIdMock, id];
+
+        try {
+            return this.postgresClient.execute(query, values);
+        } catch (error) {
+            console.log('updateById: ', error);
+            throw new DatabaseError('Database error occured');
+        }
+    }
+
     async deleteById(params) {
         const {
             userId,
