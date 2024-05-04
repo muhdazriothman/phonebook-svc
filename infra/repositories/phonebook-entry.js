@@ -1,5 +1,7 @@
 'use strict';
 
+const luxon = require('luxon');
+
 const PhoneBookEntry = require('../../domain/entities/phonebook-entry');
 
 const PostgresClient = require('../postgres/client');
@@ -27,7 +29,7 @@ class PhoneBookEntryRepository {
         return PhoneBookEntry.create({
             id: record.id,
             name: record.name,
-            dateOfBirth: record.date_of_birth,
+            dateOfBirth: luxon.DateTime.fromJSDate(record.date_of_birth).toFormat('yyyy-MM-dd'),
             mobileNumber: record.mobile_number,
             userId: record.user_id
         });
