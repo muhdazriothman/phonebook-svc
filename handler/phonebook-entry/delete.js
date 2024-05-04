@@ -16,14 +16,15 @@ exports.handler = async (event) => {
 
         const {
             pathParameters,
+            requestContext
         } = event;
 
         if (!pathParameters || !pathParameters.id) {
             throw new ValidationError('Empty path parameter');
         }
 
-        // TOaDO - get user id from event
-        const userId = 1;
+        const userId = Number(requestContext.authorizer.id);
+        const id = Number(pathParameters.id);
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create()
@@ -31,7 +32,7 @@ exports.handler = async (event) => {
 
         await phoneBookEntryService.delete({
             userId: userId,
-            phoneBookEntryId: pathParameters.id
+            id: id
         });
 
         return {

@@ -9,7 +9,7 @@ const {
 
 exports.handler = async (event) => {
     try {
-        const userId = event.requestContext.authorizer.id;
+        const userId = Number(event.requestContext.authorizer.id);
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create()

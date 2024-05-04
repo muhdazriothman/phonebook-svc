@@ -14,22 +14,22 @@ exports.handler = async (event) => {
             throw new ValidationError('Empty payload');
         }
 
-        const userId = event.requestContext.authorizer.id;
+        const userId = Number(event.requestContext.authorizer.id);
 
         const body = jsonUtils.parseJsonString(event.body);
 
-        const phoneBookEntryDto = PhoneBookEntryDto.toCreateDTO({
+        const dto = PhoneBookEntryDto.toCreateDTO({
             name: body.name,
             dateOfBirth: body.dateOfBirth,
             mobileNumber: body.mobileNumber,
-            userId,
+            userId: userId,
         });
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create(),
         });
 
-        const result = await phoneBookEntryService.create(phoneBookEntryDto);
+        const result = await phoneBookEntryService.create(dto);
 
         return {
             statusCode: 200,

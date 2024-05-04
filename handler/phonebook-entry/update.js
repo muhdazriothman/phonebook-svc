@@ -19,7 +19,8 @@ exports.handler = async (event) => {
 
         const {
             pathParameters,
-            body
+            body,
+            requestContext
         } = event;
 
         if (!pathParameters || !pathParameters.id) {
@@ -32,16 +33,22 @@ exports.handler = async (event) => {
 
         const parsedBody = jsonUtils.parseJsonString(body);
 
-        const phoneBookEntryDto = PhoneBookEntryDto.toUpdateDTO({
-            id: pathParameters.id,
-            ...parsedBody
+        const userId = Number(requestContext.authorizer.id);
+        const id = Number(pathParameters.id);
+
+        const dto = PhoneBookEntryDto.toUpdateDTO({
+            id: id,
+            name: parsedBody.name,
+            dateOfBirth: parsedBody.dateOfBirth,
+            mobileNumber: parsedBody.mobileNumber,
+            userId: userId,
         });
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create(),
         });
 
-        const result = await phoneBookEntryService.update(phoneBookEntryDto);
+        const result = await phoneBookEntryService.update(dto);
 
         return {
             statusCode: 200,
