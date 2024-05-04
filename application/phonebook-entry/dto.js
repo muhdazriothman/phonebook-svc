@@ -10,13 +10,15 @@ class PhoneBookEntryDto {
         this.name = params.name;
         this.dateOfBirth = params.dateOfBirth;
         this.mobileNumber = params.mobileNumber;
+        this.userId = params.userId;
     }
 
     static toCreateDTO(params) {
         const schema = Joi.object({
             name: Joi.string().trim().min(1).required(),
             dateOfBirth: Joi.date().iso().max('now').required(),
-            mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required()
+            mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required(),
+            userId: Joi.number().integer().min(1).required()
         });
 
         const { error } = schema.validate(params);
@@ -33,7 +35,8 @@ class PhoneBookEntryDto {
             id: Joi.number().integer().min(1).required(),
             name: Joi.string().trim().min(1).required(),
             dateOfBirth: Joi.date().iso().max('now').required(),
-            mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required()
+            mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required(),
+            userId: Joi.number().integer().min(1).required()
         });
 
         const { error } = schema.validate(params);

@@ -14,9 +14,16 @@ exports.handler = async (event) => {
             throw new ValidationError('Empty payload');
         }
 
+        const userId = event.requestContext.authorizer.id;
+
         const body = jsonUtils.parseJsonString(event.body);
 
-        const phoneBookEntryDto = PhoneBookEntryDto.toCreateDTO(body);
+        const phoneBookEntryDto = PhoneBookEntryDto.toCreateDTO({
+            name: body.name,
+            dateOfBirth: body.dateOfBirth,
+            mobileNumber: body.mobileNumber,
+            userId,
+        });
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create(),

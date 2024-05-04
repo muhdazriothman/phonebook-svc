@@ -53,12 +53,13 @@ class PhoneBookEntryRepository {
         }
     }
 
-    async getByNameAndMobileNumber(params) {
+    async getByNameAndMobileNumber(dto) {
         const {
-            userId = 1,
             name,
-            mobileNumber
-        } = params;
+            mobileNumber,
+            userId
+        } = dto;
+
         const query = 'SELECT * FROM phonebook_entries WHERE user_id = $1 AND name = $2 AND mobile_number = $3';
         const values = [userId, name, mobileNumber];
 
@@ -77,12 +78,10 @@ class PhoneBookEntryRepository {
     }
 
     async listByUserId(userId) {
-        const userIdMock = 1;
         const query = 'SELECT * FROM phonebook_entries WHERE user_id = $1';
-        const values = [userIdMock];
+        const values = [userId];
 
         try {
-            // TODO: Future improvement: Implement pagination
             const result = await this.postgresClient.execute(query, values);
 
             const phoneBookEntries = [];
@@ -98,19 +97,16 @@ class PhoneBookEntryRepository {
         }
     }
 
-    updateById(params) {
+    updateById(dto, userId) {
         const {
-            // userId,
             id,
             name,
             dateOfBirth,
             mobileNumber
-        } = params;
-
-        const userIdMock = 1;
+        } = dto;
 
         const query = 'UPDATE phonebook_entries SET name = $1, date_of_birth = $2, mobile_number = $3 WHERE user_id = $4 AND id = $5 RETURNING *';
-        const values = [name, dateOfBirth, mobileNumber, userIdMock, id];
+        const values = [name, dateOfBirth, mobileNumber, userId, id];
 
         try {
             return this.postgresClient.execute(query, values);
