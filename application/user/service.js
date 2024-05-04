@@ -75,7 +75,8 @@ class UserService {
         } = await secretManagerClient.getSecret(SecretManagerClient.SecretKey.user);
 
         const token = jwt.sign({
-            email: user.email
+            id: user.id,
+            email: user.email,
         }, passwordKey, {
             expiresIn: '1h'
         });
