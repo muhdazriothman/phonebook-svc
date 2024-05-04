@@ -15,10 +15,10 @@ class PhoneBookEntryDto {
 
     static toCreateDTO(params) {
         const schema = Joi.object({
-            name: Joi.string().trim().min(1).required(),
+            name: Joi.string().trim().min(1).strict().required(),
             dateOfBirth: Joi.date().iso().max('now').required(),
             mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required(),
-            userId: Joi.number().integer().min(1).required()
+            userId: Joi.number().integer().min(1).strict().required()
         });
 
         const { error } = schema.validate(params);
@@ -32,11 +32,11 @@ class PhoneBookEntryDto {
 
     static toUpdateDTO(params) {
         const schema = Joi.object({
-            id: Joi.number().integer().min(1).required(),
+            id: Joi.number().integer().min(1).strict().required(),
             name: Joi.string().trim().min(1).required(),
             dateOfBirth: Joi.date().iso().max('now').required(),
             mobileNumber: Joi.string().pattern(/^[0-9]+$/).min(8).max(15).required(),
-            userId: Joi.number().integer().min(1).required()
+            userId: Joi.number().integer().min(1).strict().required()
         });
 
         const { error } = schema.validate(params);
