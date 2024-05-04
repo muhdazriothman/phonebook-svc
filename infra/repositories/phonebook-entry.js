@@ -99,21 +99,46 @@ class PhoneBookEntryRepository {
         }
     }
 
-    updateById(dto, userId) {
+    async updateById(dto,) {
         const {
             id,
             name,
             dateOfBirth,
-            mobileNumber
+            mobileNumber,
+            userId
         } = dto;
 
         const query = 'UPDATE phonebook_entries SET name = $1, date_of_birth = $2, mobile_number = $3 WHERE user_id = $4 AND id = $5 RETURNING *';
         const values = [name, dateOfBirth, mobileNumber, userId, id];
 
         try {
-            return this.postgresClient.execute(query, values);
+            const result = await this.postgresClient.execute(query, values);
+            return PhoneBookEntryRepository.toDomain(result[0]);
         } catch (error) {
             console.log('updateById: ', error);
+            throw new DatabaseError('Database error occured');
+        }
+    }
+
+    async getById(params) {
+        const {
+            userId,
+            id
+        } = params;
+
+        const query = 'SELECT * FROM phonebook_entries WHERE user_id = $1 AND id = $2';
+        const values = [userId, id];
+
+        try {
+            const result = await this.postgresClient.execute(query, values);
+
+            if (result.length === 0) {
+                return null;
+            }
+
+            return PhoneBookEntryRepository.toDomain(result[0]);
+        } catch (error) {
+            console.log('getById: ', error);
             throw new DatabaseError('Database error occured');
         }
     }
