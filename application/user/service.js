@@ -35,7 +35,7 @@ class UserService {
         const sameEntry = await this.userRepository.getByEmail(dto);
 
         if (sameEntry) {
-            throw new BusinessLogicError('Found duplicated entry');
+            throw new BusinessLogicError('Email already exists');
         }
 
         const user = new User({

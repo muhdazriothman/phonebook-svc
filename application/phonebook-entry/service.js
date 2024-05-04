@@ -25,7 +25,7 @@ class PhoneBookEntryService {
         const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
         if (sameEntry) {
-            throw new BusinessLogicError('Found duplicated entry');
+            throw new BusinessLogicError('Similar entry already exists');
         }
 
         return await this.phoneBookEntryRepository.create(dto);
@@ -39,7 +39,7 @@ class PhoneBookEntryService {
         const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
         if (sameEntry && sameEntry.id !== dto.id) {
-            throw new BusinessLogicError('Found duplicated entry');
+            throw new BusinessLogicError('Similar entry already exists');
         }
 
         return await this.phoneBookEntryRepository.updateById(dto);
