@@ -37,7 +37,9 @@ exports.handler = async (event) => {
 
         return {
             statusCode: 200,
-            body: { message: 'Phonebook entry deleted' },
+            body: JSON.stringify({
+                message: 'Phonebook entry deleted'
+            })
         };
     } catch (error) {
         const errorResponse = resolveError(error);
