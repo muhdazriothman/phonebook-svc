@@ -24,6 +24,13 @@ provider:
   name: aws
   runtime: nodejs18.x
 
+  iam: 
+    role: 
+      statements: 
+        - Effect: Allow
+          Action: 'secretsmanager:*'
+          Resource: "*"
+
   # httpApi:
   #   authorizers:
   #     customAuthorizer:
