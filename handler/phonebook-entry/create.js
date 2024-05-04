@@ -16,7 +16,7 @@ exports.handler = async (event) => {
 
         const body = jsonUtils.parseJsonString(event.body);
 
-        const phoneBookEntryDto = PhoneBookEntryDto.create(body);
+        const phoneBookEntryDto = PhoneBookEntryDto.toCreateDTO(body);
 
         const phoneBookEntryService = PhoneBookEntryService.create({
             phoneBookEntryRepository: PhoneBookEntryRepository.create(),
