@@ -26,6 +26,21 @@ class UserDto {
 
         return new UserDto(params);
     }
+
+    static toLoginDTO(params) {
+        const schema = Joi.object({
+            email: Joi.string().email().required(),
+            password: Joi.string().min(8).max(15).required()
+        });
+
+        const { error } = schema.validate(params);
+
+        if (error) {
+            throw new ValidationError(`Invalid payload: ${error.message}`);
+        }
+
+        return new UserDto(params);
+    }
 }
 
 module.exports = UserDto;

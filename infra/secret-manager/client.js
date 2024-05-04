@@ -3,7 +3,8 @@ const AWS = require('aws-sdk');
 AWS.config.update({ region: 'ap-southeast-1' });
 
 const SecretKey = {
-    db: 'bursa-phonebook-db-secret'
+    db: 'bursa-phonebook-db-secret',
+    user: 'bursa-phonebook-user-secret'
 };
 class SecretManagerClient {
     static SecretKey = SecretKey;

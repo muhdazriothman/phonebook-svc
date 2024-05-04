@@ -114,6 +114,14 @@ functions:
      - http:
         path: user/create
         method: post
+
+  login-user:
+    handler: handler/user/login.handler
+    name: 'login-user'
+    events:
+     - http:
+        path: user/login
+        method: post
   
   # phonebook-authorizer:
   #   handler: handler/authorizer/authorizer.handler

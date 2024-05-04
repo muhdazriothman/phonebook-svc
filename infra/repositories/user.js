@@ -24,11 +24,11 @@ class UserRepository {
     }
 
     static toDomain(record) {
-        return new User({
+        return User.create({
             id: record.id,
             name: record.name,
             email: record.email,
-            password: record.password
+            password: record.password_hash
         });
     }
 
