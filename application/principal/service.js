@@ -17,11 +17,9 @@ class PrincipalService {
         const {
             passwordKey
         } = await secretManagerClient.getSecret(SecretManagerClient.SecretKey.user);
-        console.log('password', passwordKey);
 
         try {
             const decodedToken = jwt.verify(token, passwordKey);
-            console.log('decodedToken: ', decodedToken);
 
             return {
                 valid: true,
