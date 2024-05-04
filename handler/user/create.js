@@ -18,14 +18,11 @@ exports.handler = async (event) => {
 
         const userDto = UserDto.toCreateDTO(body);
 
-        console.log('userDto: ', userDto);
-
         const userService = UserService.create({
             userRepository: UserRepository.create(),
         });
 
         const result = await userService.create(userDto);
-        console.log('result: ', result);
 
         return {
             statusCode: 200,

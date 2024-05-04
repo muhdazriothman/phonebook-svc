@@ -23,7 +23,6 @@ exports.handler = async (event) => {
         });
 
         const result = await phoneBookEntryService.create(phoneBookEntryDto);
-        console.log('result: ', result);
 
         return {
             statusCode: 200,
