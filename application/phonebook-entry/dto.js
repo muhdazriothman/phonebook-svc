@@ -24,7 +24,7 @@ class PhoneBookEntryDto {
         const { error } = schema.validate(params);
 
         if (error) {
-            throw new ValidationError(`Invalid payload: ${error.message}`);
+            throw new ValidationError(error.message);
         }
 
         return new PhoneBookEntryDto(params);
@@ -42,7 +42,7 @@ class PhoneBookEntryDto {
         const { error } = schema.validate(params);
 
         if (error) {
-            throw new ValidationError(`Invalid payload: ${error.message}`);
+            throw new ValidationError('error.message');
         }
 
         return new PhoneBookEntryDto(params);

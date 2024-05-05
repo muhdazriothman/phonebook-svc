@@ -21,7 +21,7 @@ class UserDto {
         const { error } = schema.validate(params);
 
         if (error) {
-            throw new ValidationError(`Invalid payload: ${error.message}`);
+            throw new ValidationError(error.message);
         }
 
         return new UserDto(params);
@@ -36,7 +36,7 @@ class UserDto {
         const { error } = schema.validate(params);
 
         if (error) {
-            throw new ValidationError(`Invalid payload: ${error.message}`);
+            throw new ValidationError(error.message);
         }
 
         return new UserDto(params);
