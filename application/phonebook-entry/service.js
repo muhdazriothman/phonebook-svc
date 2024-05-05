@@ -35,6 +35,10 @@ class PhoneBookEntryService {
         return await this.phoneBookEntryRepository.listByUserId(userId);
     }
 
+    async get(userId) {
+        return await this.phoneBookEntryRepository.getById(userId);
+    }
+
     async update(dto) {
         const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
