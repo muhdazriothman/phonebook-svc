@@ -34,8 +34,9 @@ functions:
     name: 'create-phonebook-entry'
     events:
      - http:
-        path: phonebook-entry/create
+        path: phonebook-entry
         method: post
+        cors: true
         authorizer:
           name: tokenAuthorizer
 
@@ -44,8 +45,24 @@ functions:
     name: 'list-phonebook-entry'
     events:
      - http:
-        path: phonebook-entry/list
+        path: phonebook-entry
         method: get
+        cors: true
+        authorizer:
+          name: tokenAuthorizer
+
+  getPhonebookEntry:
+    handler: handler/phonebook-entry/get.handler
+    name: 'get-phonebook-entry'
+    events:
+     - http:
+        path: phonebook-entry/{id}
+        method: get
+        cors: true
+        request: 
+          parameters: 
+             paths: 
+               id: true
         authorizer:
           name: tokenAuthorizer
 
@@ -54,8 +71,9 @@ functions:
     name: 'update-phonebook-entry'
     events:
      - http:
-        path: phonebook-entry/update/{id}
+        path: phonebook-entry/{id}
         method: put
+        cors: true
         request: 
           parameters: 
              paths: 
@@ -68,8 +86,9 @@ functions:
     name: 'delete-phonebook-entry'
     events:
      - http:
-        path: phonebook-entry/delete/{id}
+        path: phonebook-entry/{id}
         method: delete
+        cors: true
         request: 
           parameters: 
              paths: 
@@ -82,17 +101,31 @@ functions:
     name: 'create-user'
     events:
      - http:
-        path: user/create
+        path: user
         method: post
+        cors: true
 
   loginUser:
     handler: handler/user/login.handler
     name: 'login-user'
     events:
      - http:
-        path: user/login
+        path: login
         method: post
+        cors: true
   
   tokenAuthorizer:
     handler: handler/authorizer/authorizer.handler
     name: 'token-authorizer'
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
