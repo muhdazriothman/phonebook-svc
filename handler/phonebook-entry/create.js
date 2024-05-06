@@ -32,7 +32,7 @@ exports.handler = async (event) => {
         const result = await phoneBookEntryService.create(dto);
 
         return {
-            statusCode: 200,
+            statusCode: 201,
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true,

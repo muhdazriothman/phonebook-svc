@@ -13,7 +13,7 @@ class UserDto {
 
     static toCreateDTO(params) {
         const schema = Joi.object({
-            name: Joi.string().trim().min(1).required(),
+            name: Joi.string().trim().min(1).max(50).required(),
             email: Joi.string().email().required(),
             password: Joi.string().min(8).max(15).required()
         });

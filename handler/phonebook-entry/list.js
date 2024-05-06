@@ -18,7 +18,7 @@ exports.handler = async (event) => {
         const result = await phoneBookEntryService.list(userId);
 
         return {
-            statusCode: 200,
+            statusCode: result.length > 0 ? 200 : 204,
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true,

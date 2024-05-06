@@ -25,7 +25,7 @@ exports.handler = async (event) => {
         const result = await userService.create(userDto);
 
         return {
-            statusCode: 200,
+            statusCode: 201,
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true,

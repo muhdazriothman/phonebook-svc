@@ -1,0 +1,364 @@
+openapi: 3.0.2
+info:
+  title: Phonebook API
+  version: "1.0"
+  description: A simple phonebook management API
+
+servers:
+  - url: https://of8mqpka89.execute-api.ap-southeast-1.amazonaws.com/dev
+
+tags:
+  - name: phonebook
+    description: Phonebook management
+  - name: user
+    description: User management
+
+paths:
+  /phonebook-entry:
+    post:
+        tags:
+          - phonebook
+        summary: Create a phonebook entry
+        operationId: createPhonebookEntry
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePhonebookEntry'
+        responses:
+          '201':
+            description: Created
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/PhonebookEntry'
+          '400':
+            description: 'Bad request'
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '409':
+            description: 'Conflict'
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '500':
+            description: 'Internal server error'
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+
+    get:
+      tags:
+        - phonebook
+      summary: List phonebook entries
+      operationId: listPhonebookEntry
+      responses:
+        '200':
+          description: A list of phonebook entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PhonebookEntry'
+        '204':
+          description: No content
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /phonebook-entry/{id}:
+    get:
+      tags:
+        - phonebook
+      summary: Get a phonebook entry
+      operationId: getPhonebookEntry
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: A phonebook entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhonebookEntry'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      tags:
+        - phonebook
+      summary: Update a phonebook entry
+      operationId: updatePhonebookEntry
+      parameters:
+        - $ref: '#/components/parameters/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePhonebookEntry'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhonebookEntry'
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      tags:
+        - phonebook
+      summary: Delete a phonebook entry
+      operationId: deletePhonebookEntry
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200':
+          description: Deleted
+        '404':
+          description: 'Not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create a user
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                required:
+                  - token
+        '400':
+          description: 'Bad request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+  /login:
+    post:
+      tags:
+        - user
+      summary: Login
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginUser'
+      responses:
+        '200':
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                required:
+                  - token
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 'Internal server error'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    PhonebookEntry:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dateOfBirth:
+          type: string
+        phoneNumber:
+          type: string
+        userId:
+          type: integer
+      required:
+        - name
+        - dateOfBirth
+        - phoneNumber
+
+    CreatePhonebookEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        dateOfBirth:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+          minLength: 8
+          maxLength: 15
+          pattern: '^\+?[0-9]{8,15}$'
+      required:
+        - name
+        - dateOfBirth
+        - phoneNumber
+
+    UpdatePhonebookEntry:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        dateOfBirth:
+          type: string
+          format: date
+        phoneNumber:
+          type: string
+          minLength: 8
+          maxLength: 15
+          pattern: '^\+?[0-9]{8,15}$'
+      required:
+        - name
+        - dateOfBirth
+        - phoneNumber
+
+    CreateUser:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          maxLength: 15
+      required:
+        - name
+        - email
+        - password
+
+    LoginUser:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          maxLength: 15
+      required:
+        - email
+        - password
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+        
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+    
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer

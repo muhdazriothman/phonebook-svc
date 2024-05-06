@@ -35,14 +35,19 @@ exports.handler = async (event) => {
             id: id
         });
 
-        return {
-            statusCode: 200,
+        const response = {
+            statusCode: result ? 200 : 404,
             headers: {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Credentials': true,
-            },
-            body: JSON.stringify(result)
+            }
         };
+
+        if (result) {
+            response.body = JSON.stringify(result);
+        }
+
+        return result;
     } catch (error) {
         const errorResponse = resolveError(error);
         return errorResponse;

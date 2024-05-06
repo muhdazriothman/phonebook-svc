@@ -40,6 +40,11 @@ class PhoneBookEntryService {
     }
 
     async update(dto) {
+        const phoneBookEntry = await this.phoneBookEntryRepository.getById(dto);
+        if (!phoneBookEntry) {
+            throw new BusinessLogicError('Phonebook entry not found');
+        }
+
         const sameEntry = await this.phoneBookEntryRepository.getByNameAndMobileNumber(dto);
 
         if (sameEntry && sameEntry.id !== dto.id) {
