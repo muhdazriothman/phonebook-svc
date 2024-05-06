@@ -42,7 +42,7 @@ class PhoneBookEntryDto {
         const { error } = schema.validate(params);
 
         if (error) {
-            throw new ValidationError('error.message');
+            throw new ValidationError(error.message);
         }
 
         return new PhoneBookEntryDto(params);
